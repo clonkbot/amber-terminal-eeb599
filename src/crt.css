@@ -1,0 +1,569 @@
+/* CRT Terminal Styles - Amber Phosphor Theme */
+
+:root {
+  --amber: #ffb000;
+  --amber-dim: #cc8800;
+  --amber-bright: #ffc832;
+  --amber-glow: rgba(255, 176, 0, 0.4);
+  --amber-text-shadow: 0 0 5px rgba(255, 176, 0, 0.8), 0 0 10px rgba(255, 176, 0, 0.5), 0 0 20px rgba(255, 176, 0, 0.3);
+  --screen-bg: #0a0800;
+  --screen-curve: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 80%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'VT323', monospace;
+  background: #1a1a18;
+}
+
+/* CRT Container - The Monitor Housing */
+.crt-container {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #2a2a28 0%, #1a1a18 50%, #0f0f0e 100%);
+  padding: 1rem;
+}
+
+/* CRT Screen - The Glass Surface */
+.crt-screen {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  max-height: 90vh;
+  background: var(--screen-bg);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 100px rgba(255, 176, 0, 0.05),
+    0 0 20px rgba(0, 0, 0, 0.8),
+    0 0 60px rgba(255, 176, 0, 0.1);
+}
+
+/* Scan Lines Overlay */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.3) 1px,
+    rgba(0, 0, 0, 0.3) 2px
+  );
+  pointer-events: none;
+  z-index: 10;
+  animation: scanlines-flicker 0.05s infinite;
+}
+
+@keyframes scanlines-flicker {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.95; }
+}
+
+/* Phosphor Glow Effect */
+.crt-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--screen-curve);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Content Area */
+.crt-content {
+  position: relative;
+  height: 100%;
+  padding: 1.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--amber-dim) transparent;
+}
+
+.crt-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.crt-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.crt-content::-webkit-scrollbar-thumb {
+  background: var(--amber-dim);
+  border-radius: 4px;
+}
+
+/* Terminal Output */
+.terminal-output {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.terminal-line {
+  color: var(--amber);
+  text-shadow: var(--amber-text-shadow);
+  line-height: 1.4;
+  white-space: pre;
+}
+
+/* Main Content */
+.main-content {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Section Styling */
+.section {
+  margin-bottom: 1.25rem;
+  padding: 0.75rem;
+  border: 1px solid var(--amber-dim);
+  background: rgba(255, 176, 0, 0.02);
+  position: relative;
+}
+
+.section-header {
+  position: absolute;
+  top: -0.7rem;
+  left: 0.75rem;
+  background: var(--screen-bg);
+  padding: 0 0.5rem;
+  font-size: 0.9rem;
+  color: var(--amber-bright);
+  text-shadow: var(--amber-text-shadow);
+  letter-spacing: 0.1em;
+}
+
+.bracket {
+  color: var(--amber-dim);
+}
+
+.header-text {
+  color: var(--amber-bright);
+}
+
+/* Date/Time Section */
+.datetime-section {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.datetime-display {
+  padding: 0.5rem 0;
+}
+
+.date {
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: var(--amber);
+  text-shadow: var(--amber-text-shadow);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.25rem;
+}
+
+.time {
+  font-size: clamp(2rem, 8vw, 4rem);
+  color: var(--amber-bright);
+  text-shadow:
+    0 0 10px rgba(255, 176, 0, 0.9),
+    0 0 20px rgba(255, 176, 0, 0.6),
+    0 0 40px rgba(255, 176, 0, 0.4),
+    0 0 80px rgba(255, 176, 0, 0.2);
+  letter-spacing: 0.1em;
+  animation: time-pulse 1s ease-in-out infinite;
+}
+
+@keyframes time-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.92; }
+}
+
+/* Location Input */
+.input-section {
+  padding-top: 1rem;
+}
+
+.location-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.prompt {
+  color: var(--amber-bright);
+  text-shadow: var(--amber-text-shadow);
+  font-size: 1.2rem;
+}
+
+.location-input {
+  flex: 1;
+  min-width: 150px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--amber-dim);
+  color: var(--amber);
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5rem;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.location-input::placeholder {
+  color: var(--amber-dim);
+  opacity: 0.6;
+}
+
+.location-input:focus {
+  border-bottom-color: var(--amber-bright);
+  box-shadow: 0 2px 10px rgba(255, 176, 0, 0.2);
+}
+
+.submit-btn {
+  background: transparent;
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  text-shadow: var(--amber-text-shadow);
+  transition: all 0.2s;
+  min-height: 44px;
+}
+
+.submit-btn:hover {
+  background: var(--amber);
+  color: var(--screen-bg);
+  text-shadow: none;
+  box-shadow: 0 0 20px var(--amber-glow);
+}
+
+.location-status {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--amber-dim);
+  letter-spacing: 0.1em;
+}
+
+/* Weather Section */
+.weather-section {
+  padding-top: 1rem;
+}
+
+.weather-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+@media (max-width: 400px) {
+  .weather-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.weather-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.weather-label {
+  font-size: 0.8rem;
+  color: var(--amber-dim);
+  letter-spacing: 0.1em;
+}
+
+.weather-value {
+  font-size: 1.1rem;
+  color: var(--amber);
+  text-shadow: var(--amber-text-shadow);
+  letter-spacing: 0.05em;
+}
+
+/* News Section */
+.news-section {
+  padding-top: 1rem;
+}
+
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.news-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.news-bullet {
+  color: var(--amber-dim);
+  font-size: 0.6rem;
+  margin-top: 0.4rem;
+  flex-shrink: 0;
+}
+
+.news-content {
+  flex: 1;
+}
+
+.news-title {
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  color: var(--amber);
+  text-shadow: var(--amber-text-shadow);
+  line-height: 1.3;
+  letter-spacing: 0.05em;
+}
+
+.news-source {
+  font-size: 0.75rem;
+  color: var(--amber-dim);
+  margin-top: 0.125rem;
+  letter-spacing: 0.1em;
+}
+
+/* Controls Section */
+.controls-section {
+  padding-top: 1rem;
+}
+
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  flex: 1;
+  min-width: 120px;
+  min-height: 48px;
+  background: transparent;
+  border: 2px solid var(--amber);
+  color: var(--amber);
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  text-shadow: var(--amber-text-shadow);
+  transition: all 0.2s;
+  letter-spacing: 0.1em;
+}
+
+.control-btn:hover:not(.disabled) {
+  background: var(--amber);
+  color: var(--screen-bg);
+  text-shadow: none;
+  box-shadow: 0 0 30px var(--amber-glow);
+}
+
+.control-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.stop-btn {
+  border-color: #ff6b00;
+  color: #ff6b00;
+}
+
+.stop-btn:hover:not(.disabled) {
+  background: #ff6b00;
+}
+
+.speaking-indicator {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--amber-bright);
+  text-shadow: var(--amber-text-shadow);
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pulse {
+  animation: pulse 0.5s ease-in-out infinite;
+  color: #00ff00;
+  text-shadow: 0 0 10px #00ff00;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Blinking Cursor */
+.cursor-blink {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  color: var(--amber);
+  text-shadow: var(--amber-text-shadow);
+  animation: blink 1s step-end infinite;
+  z-index: 100;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Footer */
+.footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 176, 0, 0.2);
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 0.75rem;
+  color: var(--amber-dim);
+  opacity: 0.5;
+  letter-spacing: 0.15em;
+}
+
+/* CRT Screen Flicker Animation */
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  5% { opacity: 0.95; }
+  10% { opacity: 0.97; }
+  15% { opacity: 0.94; }
+  20% { opacity: 0.98; }
+  25% { opacity: 0.97; }
+  30% { opacity: 0.96; }
+  35% { opacity: 0.95; }
+  40% { opacity: 0.98; }
+  45% { opacity: 0.97; }
+  50% { opacity: 0.96; }
+  55% { opacity: 0.97; }
+  60% { opacity: 0.98; }
+  65% { opacity: 0.96; }
+  70% { opacity: 0.97; }
+  75% { opacity: 0.95; }
+  80% { opacity: 0.98; }
+  85% { opacity: 0.97; }
+  90% { opacity: 0.96; }
+  95% { opacity: 0.98; }
+  100% { opacity: 0.97; }
+}
+
+.crt-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 176, 0, 0.03);
+  animation: flicker 0.15s infinite;
+  pointer-events: none;
+  z-index: 15;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 640px) {
+  .crt-container {
+    padding: 0.5rem;
+  }
+
+  .crt-content {
+    padding: 1rem;
+  }
+
+  .terminal-output {
+    max-height: 100px;
+    font-size: 0.75rem;
+  }
+
+  .section {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+  }
+
+  .cursor-blink {
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 1rem;
+  }
+
+  .control-btn {
+    min-width: 100px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 375px) {
+  .crt-content {
+    padding: 0.75rem;
+  }
+
+  .section-header {
+    font-size: 0.75rem;
+  }
+
+  .time {
+    font-size: 2rem;
+  }
+
+  .date {
+    font-size: 0.9rem;
+  }
+}
+
+/* Landscape mode on mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .crt-screen {
+    max-height: 95vh;
+  }
+
+  .terminal-output {
+    max-height: 60px;
+  }
+
+  .section {
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .datetime-display {
+    padding: 0.25rem 0;
+  }
+
+  .time {
+    font-size: 2rem;
+  }
+}
